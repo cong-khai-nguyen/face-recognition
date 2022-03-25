@@ -31,6 +31,16 @@ def unknown_image_encoded(img):
 
     return encoding
 
+def get_optimal_font_scale(text, width):
+    for scale in reversed(range(0, 60, 1)):
+        textSize = cv2.getTextSize(text, fontFace=cv2.FONT_HERSHEY_DUPLEX, fontScale=scale/10, thickness=1)
+        new_width = textSize[0][0]
+        if (new_width <= width):
+            return scale/13
+    return 1
+
+
+
 def classify_face(im):
     # Get every face image I have encoded
     faces = get_encoded_faces()
@@ -38,7 +48,7 @@ def classify_face(im):
     known_face_names = list(faces.keys())
 
     img = cv2.imread(im, 1)
-    img = cv2.resize(img, (0,0), fx = 0.5, fy =0.5)
+    img = cv2.resize(img, (0,0), fx = 0.8, fy =0.8)
 
     face_locations = fr.face_locations(img)
     unknown_face_encodings = fr.face_encodings(img, face_locations)
@@ -65,7 +75,8 @@ def classify_face(im):
             #Draw label
             cv2.rectangle(img, (left-20, bottom-15), (right+20, bottom+20), (255,0,0), cv2.FILLED)
             font = cv2.FONT_HERSHEY_DUPLEX
-            cv2.putText(img, name, (left-20, bottom+15), font, 1.0, (255,255,255), 2)
+
+            cv2.putText(img, name, (left-20, bottom+15), font, get_optimal_font_scale(name, right-left+40), (255,255,255), 2)
 
     while True:
         cv2.imshow('Video', img)
