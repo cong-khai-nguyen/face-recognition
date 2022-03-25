@@ -4,6 +4,7 @@ import face_recognition as fr
 import dlib
 import numpy as np
 from time import sleep
+import cv2
 
 # function to encodes all the faces in the faces folder
 # return a dict of (name, image encoded) -> Ex: bill gate : [......]
@@ -23,5 +24,9 @@ def get_encoded_faces():
                 encoded[f.split(".")[0]] = encoding
     return encoded
 
+# function to encode the given image in order to test with the data we have
+def unknown_image_encoded(img):
+    face = fr.load_image_file("media/faces/" + img)
+    encoding = fr.face_encodings(face)[0]
 
-get_encoded_faces()
+    return encoding
