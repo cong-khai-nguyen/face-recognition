@@ -11,4 +11,4 @@ https://face-recognition.readthedocs.io/en/latest/face_recognition.html
 https://docs.opencv.org/3.4/d4/da8/group__imgcodecs.html
 
 # Install and Run the Project
-This project requires to imported and installed libraries: face_recognition, numpy and open-cv.
+This project requires imported and installed libraries: face_recognition, numpy and open-cv.
